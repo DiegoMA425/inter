@@ -11,7 +11,7 @@ app.get('/empleado', function(req, res) {
         .skip(Number(desde))
         .limit(Number(hasta))
         .populate('usuario', '_id')
-        .populate('departamento', 'extension_telefonica')
+        .populate('departamento', '_id')
         .exec((err, empleado) => {
             if (err) {
                 return res.status(400).json({
@@ -23,7 +23,7 @@ app.get('/empleado', function(req, res) {
 
             res.json({
                 ok: true,
-                msg: ' empleados obtenidos con exito',
+                msg: ' empleados listados con exito',
                 conteo: empleado.length,
                 empleado
             });
@@ -37,7 +37,7 @@ app.get('/empleado/:id', function(req, res) {
 
     empleado.findById({ _id: idempleado })
     .populate('usuario', '_id')
-    .populate('departamento', 'extension_telefonica')
+    .populate('departamento', '_id')
         .exec((err, empleado) => {
             if (err) {
                 return res.status(400).json({
@@ -49,7 +49,7 @@ app.get('/empleado/:id', function(req, res) {
 
             res.json({
                 ok: true,
-                msg: 'empleados obtenidos con exito',
+                msg: 'empleado listado con exito',
                 conteo: empleado.length,
                 empleado
             });
@@ -59,8 +59,7 @@ app.get('/empleado/:id', function(req, res) {
 
 app.post('/empleado', (req, res) => {
     let pro = new empleado({
-        id_usuario : req.body.id_usuario,
-        id_departamento : req.body.id_departamento,
+       
         nombre_del_puesto : req.body.nombre_del_puesto,
         anios_servicio : req.body.anios_servicio,
         hora_entrada : req.body.hora_entrada,
@@ -89,7 +88,7 @@ app.post('/empleado', (req, res) => {
 
 app.put('/empleado/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['id_usuario', 'id_departamento','nombre_del_puesto', 'anios_servicio', 'hora_entrada', 'hora_salida']);
+    let body = _.pick(req.body, ['nombre_del_puesto', 'anios_servicio', 'hora_entrada', 'hora_salida']);
 
     empleado.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, empDB) => {
@@ -102,7 +101,7 @@ app.put('/empleado/:id', function(req, res) {
             }
             res.json({
                 ok: true,
-                msg: 'Producto actualizado con exito',
+                msg: 'empleado actualizado con exito',
                 producto: empDB
             });
         });

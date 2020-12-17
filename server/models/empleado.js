@@ -4,14 +4,7 @@ const Schema = mongoose.Schema;
 
 
 let empleadoSchema = new Schema({
-    id_usuario: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
-    id_departamento: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
+   
     nombre_del_puesto: {
         type: String,
         required: [true, 'necesito el nombre']

@@ -7,7 +7,7 @@ app.get('/usuario', function(req, res) {
     let desde = req.query.desde || 0;
     let hasta = req.query.hasta || 300;
 
-    Usuario.find({ estado: true })
+    Usuario.find({ activo: true })
         .skip(Number(desde))
         .limit(Number(hasta))
         .exec((err, usuario) => {
@@ -60,7 +60,8 @@ app.post('/usuario', function(req, res) {
         edad: body.edad,
         curp: body.curp,
         telefono: body.telefono,
-        email: body.email,
+        mail: body.mail
+        
         
     });
 
@@ -83,7 +84,7 @@ app.post('/usuario', function(req, res) {
 
 app.put('/usuario/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'primer_apellido', 'segundo_apellido', 'edad', 'curp', 'telefono', 'email']);
+    let body = _.pick(req.body, ['nombre', 'primer_apellido', 'segundo_apellido', 'edad', 'curp', 'telefono', 'mail' ]);
 
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, usrDB) => {

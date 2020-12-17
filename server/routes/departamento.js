@@ -7,7 +7,7 @@ app.get('/departamento', (req, res) => {
     let desde = req.query.desde || 0;
     let hasta = req.query.hasta || 300;
     
-    Categoria.find({})
+    departamento.find({activo: true})
         .skip(Number(desde))
         .limit(Number(hasta))
         .populate('usuario', '_id')
@@ -35,7 +35,7 @@ app.get('/departamento/:id', (req, res) => {
 
     let iddepartamento = req.params.id;
 
-    Categoria.findById({ _id: iddepartamento })
+    departamento.findById({ _id: iddepartamento })
     .populate('usuario', '_id')
         .exec((err, departamento) => {
             if (err) {
@@ -59,13 +59,12 @@ app.get('/departamento/:id', (req, res) => {
 
 app.post('/departamento', (req, res) => {
     let cat = new departamento({
-        id_jefe_de_area: req.body.id_jefe_de_area,
+
         nombre: req.body.nombre,
-        numero_empleado: req.body.numero_empleado,
-        extension_telefonica: req.body.extension_telefonica,
+        numero_empleados: req.body.numero_empleados,
+        extension_telefonica: req.body.extension_telefonica
        
-      
-        
+
     });
 
     cat.save((err, depDB) => {
@@ -79,7 +78,7 @@ app.post('/departamento', (req, res) => {
 
         res.json({
             ok: true,
-            msg: 'departamento insertada con exito',
+            msg: 'departamento insertado con exito',
             depDB
         });
     });
@@ -88,9 +87,9 @@ app.post('/departamento', (req, res) => {
 
 app.put('/departamento/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['id_jefe_de_area', 'nombre', 'numero_empleados', 'extension_telefonica']);
+    let body = _.pick(req.body, [ 'nombre', 'numero_empleados', 'extension_telefonica']);
 
-    Categoria.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
+    departamento.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, depDB) => {
             if (err) {
                 return res.status(400).json({
@@ -122,7 +121,7 @@ app.delete('/departamento/:id', function(req, res) {
         }
         res.json({
             ok: true,
-            msg: 'departamento eliminada con exito',
+            msg: 'departamento eliminado con exito',
             depDB
 
         });

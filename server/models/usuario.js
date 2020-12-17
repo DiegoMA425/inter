@@ -30,7 +30,7 @@ telefono: {
     type: Number,
     required: [true, 'necesito el numero']
 },
-email: {
+mail: {
     type: String,
     required: [true, 'necesito el correo'],
     unique:true

@@ -4,12 +4,8 @@ const Schema = mongoose.Schema;
 
 
 let departamentoSchema = new Schema({
-    id_jefe_de_area: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
-    
-    nombre_del_puesto: {
+   
+    nombre: {
         type: String,
         required: [true, 'necesito el nombre']
     },
