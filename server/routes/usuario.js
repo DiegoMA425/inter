@@ -61,7 +61,6 @@ app.post('/usuario', function(req, res) {
         curp: body.curp,
         telefono: body.telefono,
         email: body.email,
-        activo: body.activo
         
     });
 
@@ -84,7 +83,7 @@ app.post('/usuario', function(req, res) {
 
 app.put('/usuario/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'primer_apellido', 'segundo_apellido', 'edad', 'curp', 'telefono', 'email', 'activo' ]);
+    let body = _.pick(req.body, ['nombre', 'primer_apellido', 'segundo_apellido', 'edad', 'curp', 'telefono', 'email']);
 
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, usrDB) => {
@@ -110,7 +109,7 @@ app.delete('/usuario/:id', function(req, res) {
     console.log(req.params);
     console.log(id);
 
-    Usuario.findByIdAndUpdate(id, { estado: false }, { new: true, runValidators: true, context: 'query' }, (err, usrDB) => {
+    Usuario.findByIdAndUpdate(id, { activo: false }, { new: true, runValidators: true, context: 'query' }, (err, usrDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,

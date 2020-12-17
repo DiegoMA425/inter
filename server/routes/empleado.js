@@ -65,11 +65,11 @@ app.post('/empleado', (req, res) => {
         anios_servicio : req.body.anios_servicio,
         hora_entrada : req.body.hora_entrada,
         hora_salida : req.body.hora_salida,
-        activo: req.body.activo
+        
         
     });
 
-    pro.save((err, proDB) => {
+    pro.save((err, empDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -81,7 +81,7 @@ app.post('/empleado', (req, res) => {
         res.json({
             ok: true,
             msg: 'empleado insertado con exito',
-            proDB
+            empDB
         });
     });
 });
@@ -89,10 +89,10 @@ app.post('/empleado', (req, res) => {
 
 app.put('/empleado/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['id_usuario', 'id_departamento','nombre_del_puesto', 'anios_servicio', 'hora_entrada', 'hora_salida', 'activo']);
+    let body = _.pick(req.body, ['id_usuario', 'id_departamento','nombre_del_puesto', 'anios_servicio', 'hora_entrada', 'hora_salida']);
 
     empleado.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
-        (err, proDB) => {
+        (err, empDB) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -103,7 +103,7 @@ app.put('/empleado/:id', function(req, res) {
             res.json({
                 ok: true,
                 msg: 'Producto actualizado con exito',
-                producto: proDB
+                producto: empDB
             });
         });
 });
@@ -112,7 +112,7 @@ app.delete('/empleado/:id', function(req, res) {
 
     let id = req.params.id;
 
-    empleado.findByIdAndUpdate(id, { disponible: false }, { new: true, runValidators: true, context: 'query' }, (err, proDB) => {
+    empleado.findByIdAndUpdate(id, { disponible: false }, { new: true, runValidators: true, context: 'query' }, (err, empDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -123,7 +123,7 @@ app.delete('/empleado/:id', function(req, res) {
         res.json({
             ok: true,
             msg: 'empleado eliminado con exito',
-            proDB
+            empDB
 
         });
     });

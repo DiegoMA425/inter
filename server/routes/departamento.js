@@ -63,12 +63,12 @@ app.post('/departamento', (req, res) => {
         nombre: req.body.nombre,
         numero_empleado: req.body.numero_empleado,
         extension_telefonica: req.body.extension_telefonica,
-        activo: req.body.activo
+       
       
         
     });
 
-    cat.save((err, catDB) => {
+    cat.save((err, depDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -80,7 +80,7 @@ app.post('/departamento', (req, res) => {
         res.json({
             ok: true,
             msg: 'departamento insertada con exito',
-            catDB
+            depDB
         });
     });
 });
@@ -88,10 +88,10 @@ app.post('/departamento', (req, res) => {
 
 app.put('/departamento/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['id_jefe_de_area', 'nombre', 'numero_empleados', 'extension_telefonica', 'activo']);
+    let body = _.pick(req.body, ['id_jefe_de_area', 'nombre', 'numero_empleados', 'extension_telefonica']);
 
     Categoria.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
-        (err, catDB) => {
+        (err, depDB) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -102,7 +102,7 @@ app.put('/departamento/:id', function(req, res) {
             res.json({
                 ok: true,
                 msg: 'departamento actualizado con exito',
-                catDB
+                depDB
             });
         });
 });
@@ -112,7 +112,7 @@ app.delete('/departamento/:id', function(req, res) {
 
     let id = req.params.id;
 
-    departamento.findByIdAndRemove(id, { context: 'query' }, (err, catDB) => {
+    departamento.findByIdAndRemove(id, { context: 'query' }, (err, depDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -123,7 +123,7 @@ app.delete('/departamento/:id', function(req, res) {
         res.json({
             ok: true,
             msg: 'departamento eliminada con exito',
-            catDB
+            depDB
 
         });
 
